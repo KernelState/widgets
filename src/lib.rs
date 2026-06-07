@@ -1,5 +1,9 @@
 use std::{fs, sync::Arc};
 use iced::{Color, Element, Length, Padding, theme::{self, Custom, Palette, Theme, palette}, widget::{button as ibutton, center, container}};
+pub mod reexports {
+    pub use serde;
+    pub use serde_json;
+}
 
 pub const DEFAULT_PALETTE: &'static [u8] = include_bytes!("default.json");
 

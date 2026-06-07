@@ -3505,6 +3505,8 @@ version = "0.1.0"
 dependencies = [
  "iced",
  "iced-box",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
