@@ -1,5 +1,6 @@
 use std::{fs, sync::Arc};
-use iced::{Color, Element, Length, Padding, theme::{self, Custom, Palette, Theme, palette}, widget::{button as ibutton, center, container}};
+use iced::{Color, Element, Length, Padding, theme::{self, Custom, Palette, Theme, palette}, widget::{button as ibutton, center, container, text}};
+use iced_box::icon::lucide::{Lucide, lucide_font};
 pub mod reexports {
     pub use serde;
     pub use serde_json;
@@ -47,8 +48,13 @@ pub fn get_matugen_theme(conf_path: String) -> Theme {
     )))
 }
 
+pub fn icon(l: Lucide) -> iced::widget::Text<'static> {
+    text(l.to_string()).font(lucide_font()).size(20)
+}
+
+
 /// 34×34 square icon button, subtle fill
-pub fn topbar_button<'a, M: 'a>(e: impl Into<Element<'a, M>>) -> ibutton::Button<'a, M> {
+pub fn icon_button<'a, M: 'a>(e: impl Into<Element<'a, M>>) -> ibutton::Button<'a, M> {
     button(center(e).width(Length::Fill).height(Length::Fill))
         .style(|t: &Theme, s| ibutton::Style {
             background: Some(iced::Background::Color(match s {
