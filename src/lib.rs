@@ -39,7 +39,7 @@ impl From<JsonPalette> for Palette {
 }
 
 pub fn get_matugen_theme(conf_path: String) -> Theme {
-    let file = fs::read_to_string(conf_path).unwrap();
+    let file = fs::read_to_string(conf_path).unwrap_or(String::from_utf8(DEFAULT_PALETTE.to_vec()).unwrap());
     let palette: JsonPalette = serde_json::from_str(&file).unwrap();
     Theme::Custom(Arc::new(Custom::new(
         "background".to_string(),
