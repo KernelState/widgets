@@ -52,6 +52,15 @@ pub fn icon(l: Lucide) -> iced::widget::Text<'static> {
     text(l.to_string()).font(lucide_font()).size(20)
 }
 
+pub fn lerp_color(a: Color, b: Color, t: f64) -> Color {
+    let t = t as f32;
+    Color {
+        r: a.r + (b.r - a.r) * t,
+        g: a.g + (b.g - a.g) * t,
+        b: a.b + (b.b - a.b) * t,
+        a: a.a + (b.a - a.a) * t,
+    }
+}
 
 /// 34×34 square icon button, subtle fill
 pub fn icon_button<'a, M: 'a>(e: impl Into<Element<'a, M>>) -> ibutton::Button<'a, M> {
@@ -76,10 +85,10 @@ pub fn icon_button<'a, M: 'a>(e: impl Into<Element<'a, M>>) -> ibutton::Button<'
         .padding(0)
 }
 
-pub fn topbar_button_active<'a, M: 'a>(e: impl Into<Element<'a, M>>) -> ibutton::Button<'a, M> {
+pub fn icon_button_active<'a, M: 'a>(e: impl Into<Element<'a, M>>, activity: f64) -> ibutton::Button<'a, M> {
     button(center(e).width(Length::Fill).height(Length::Fill))
-        .style(|t: &Theme, _| ibutton::Style {
-            background: Some(iced::Background::Color(t.palette().primary)),
+        .style(move |t: &Theme, _| ibutton::Style {
+            background: Some(iced::Background::Color(lerp_color(t.palette().background, t.palette().primary, activity))),
             border: iced::Border {
                 radius: 10.into(),
                 width: 0.0,
@@ -91,6 +100,23 @@ pub fn topbar_button_active<'a, M: 'a>(e: impl Into<Element<'a, M>>) -> ibutton:
         .width(34)
         .height(34)
         .padding(0)
+}
+
+pub fn button_active<'a, M: 'a>(e: impl Into<Element<'a, M>>, activity: f64) -> ibutton::Button<'a, M> {
+    button(center(e).width(Length::Fill).height(Length::Fill))
+        .style(move |t: &Theme, _| ibutton::Style {
+            background: Some(iced::Background::Color(lerp_color(t.palette().background, t.palette().primary, activity))),
+            border: iced::Border {
+                radius: 10.into(),
+                width: 0.0,
+                color: Color::TRANSPARENT,
+            },
+            text_color: t.palette().background,
+            ..ibutton::Style::default()
+        })
+        .width(Length::Shrink)
+        .height(34)
+        .padding(Padding::new(0.0).horizontal(14))
 }
 
 /// Wide pill-shaped button (e.g. wifi, volume) with icon + label
