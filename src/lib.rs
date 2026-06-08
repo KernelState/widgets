@@ -88,7 +88,10 @@ pub fn icon_button<'a, M: 'a>(e: impl Into<Element<'a, M>>) -> ibutton::Button<'
 pub fn icon_button_active<'a, M: 'a>(e: impl Into<Element<'a, M>>, activity: f64) -> ibutton::Button<'a, M> {
     button(center(e).width(Length::Fill).height(Length::Fill))
         .style(move |t: &Theme, _| ibutton::Style {
-            background: Some(iced::Background::Color(lerp_color(t.palette().background, t.palette().primary, activity))),
+            background: Some(iced::Background::Color(
+                                lerp_color(palette::lighten(t.palette().background, 0.1),
+                                t.palette().primary, activity),
+                            )),
             border: iced::Border {
                 radius: 10.into(),
                 width: 0.0,
@@ -105,7 +108,10 @@ pub fn icon_button_active<'a, M: 'a>(e: impl Into<Element<'a, M>>, activity: f64
 pub fn button_active<'a, M: 'a>(e: impl Into<Element<'a, M>>, activity: f64) -> ibutton::Button<'a, M> {
     button(center(e).width(Length::Fill).height(Length::Fill))
         .style(move |t: &Theme, _| ibutton::Style {
-            background: Some(iced::Background::Color(lerp_color(t.palette().background, t.palette().primary, activity))),
+            background: Some(iced::Background::Color(
+                                lerp_color(palette::lighten(t.palette().background, 0.1),
+                                t.palette().primary, activity),
+                            )),
             border: iced::Border {
                 radius: 10.into(),
                 width: 0.0,
