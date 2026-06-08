@@ -67,7 +67,7 @@ pub fn icon_button<'a, M: 'a>(e: impl Into<Element<'a, M>>) -> ibutton::Button<'
     button(center(e).width(Length::Fill).height(Length::Fill))
         .style(|t: &Theme, s| ibutton::Style {
             background: Some(iced::Background::Color(match s {
-                ibutton::Status::Hovered | ibutton::Status::Pressed => {
+                ibutton::Status::Pressed => {
                     palette::lighten(t.palette().background, 0.35)
                 }
                 _ => palette::lighten(t.palette().background, 0.15),
@@ -94,7 +94,7 @@ pub fn icon_button_active<'a, M: 'a>(e: impl Into<Element<'a, M>>, activity: f64
                 width: 0.0,
                 color: Color::TRANSPARENT,
             },
-            text_color: t.palette().background,
+            text_color: lerp_color(t.palette().text, t.palette().background, activity),
             ..ibutton::Style::default()
         })
         .width(34)
@@ -111,7 +111,7 @@ pub fn button_active<'a, M: 'a>(e: impl Into<Element<'a, M>>, activity: f64) -> 
                 width: 0.0,
                 color: Color::TRANSPARENT,
             },
-            text_color: t.palette().background,
+            text_color: lerp_color(t.palette().text, t.palette().background, activity),
             ..ibutton::Style::default()
         })
         .width(Length::Shrink)
@@ -124,7 +124,7 @@ pub fn button<'a, M: 'a>(e: impl Into<Element<'a, M>>) -> ibutton::Button<'a, M>
     ibutton(center(e).width(Length::Fill).height(Length::Fill))
         .style(|t: &Theme, s| ibutton::Style {
             background: Some(iced::Background::Color(match s {
-                ibutton::Status::Hovered | ibutton::Status::Pressed => {
+                ibutton::Status::Pressed => {
                     palette::lighten(t.palette().background, 0.35)
                 }
                 _ => palette::lighten(t.palette().background, 0.15),
