@@ -95,7 +95,7 @@ pub fn icon_button_active<'a, M: 'a>(
     button(center(e).width(Length::Fill).height(Length::Fill))
         .style(move |t: &Theme, _| ibutton::Style {
             background: Some(iced::Background::Color(lerp_color(
-                t.palette().background,
+                palette::lighten(t.palette().background, 0.15),
                 t.palette().primary,
                 activity,
             ))),
@@ -104,7 +104,7 @@ pub fn icon_button_active<'a, M: 'a>(
                 width: 0.0,
                 color: Color::TRANSPARENT,
             },
-            text_color: lerp_color(t.palette().text, t.palette().background, activity),
+            text_color: lerp_color(t.palette().text, palette::lighten(t.palette().background, 0.15), activity),
             ..ibutton::Style::default()
         })
         .width(34)
@@ -119,7 +119,7 @@ pub fn button_active<'a, M: 'a>(
     button(center(e).width(Length::Fill).height(Length::Fill))
         .style(move |t: &Theme, _| ibutton::Style {
             background: Some(iced::Background::Color(lerp_color(
-                t.palette().background,
+                palette::lighten(t.palette().background, 0.15),
                 t.palette().primary,
                 activity,
             ))),
@@ -128,7 +128,7 @@ pub fn button_active<'a, M: 'a>(
                 width: 0.0,
                 color: Color::TRANSPARENT,
             },
-            text_color: lerp_color(t.palette().text, t.palette().background, activity),
+            text_color: lerp_color(t.palette().text, palette::lighten(t.palette().background, 0.15), activity),
             ..ibutton::Style::default()
         })
         .width(Length::Shrink)
