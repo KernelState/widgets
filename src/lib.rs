@@ -1,6 +1,10 @@
-use std::{fs, sync::Arc};
-use iced::{Color, Element, Length, Padding, theme::{self, Custom, Palette, Theme, palette}, widget::{button as ibutton, center, container, text}};
+use iced::{
+    Color, Element, Length, Padding,
+    theme::{self, Custom, Palette, Theme, palette},
+    widget::{button as ibutton, center, container, text},
+};
 use iced_box::icon::lucide::{Lucide, lucide_font};
+use std::{fs, sync::Arc};
 pub mod reexports {
     pub use serde;
     pub use serde_json;
@@ -40,7 +44,8 @@ impl From<JsonPalette> for Palette {
 }
 
 pub fn get_matugen_theme(conf_path: String) -> Theme {
-    let file = fs::read_to_string(conf_path).unwrap_or(String::from_utf8(DEFAULT_PALETTE.to_vec()).unwrap());
+    let file = fs::read_to_string(conf_path)
+        .unwrap_or(String::from_utf8(DEFAULT_PALETTE.to_vec()).unwrap());
     let palette: JsonPalette = serde_json::from_str(&file).unwrap();
     Theme::Custom(Arc::new(Custom::new(
         "background".to_string(),
@@ -67,9 +72,7 @@ pub fn icon_button<'a, M: 'a>(e: impl Into<Element<'a, M>>) -> ibutton::Button<'
     button(center(e).width(Length::Fill).height(Length::Fill))
         .style(|t: &Theme, s| ibutton::Style {
             background: Some(iced::Background::Color(match s {
-                ibutton::Status::Pressed => {
-                    palette::lighten(t.palette().background, 0.35)
-                }
+                ibutton::Status::Pressed => palette::lighten(t.palette().background, 0.35),
                 _ => palette::lighten(t.palette().background, 0.15),
             })),
             border: iced::Border {
@@ -85,13 +88,17 @@ pub fn icon_button<'a, M: 'a>(e: impl Into<Element<'a, M>>) -> ibutton::Button<'
         .padding(0)
 }
 
-pub fn icon_button_active<'a, M: 'a>(e: impl Into<Element<'a, M>>, activity: f64) -> ibutton::Button<'a, M> {
+pub fn icon_button_active<'a, M: 'a>(
+    e: impl Into<Element<'a, M>>,
+    activity: f64,
+) -> ibutton::Button<'a, M> {
     button(center(e).width(Length::Fill).height(Length::Fill))
         .style(move |t: &Theme, _| ibutton::Style {
-            background: Some(iced::Background::Color(
-                                lerp_color(palette::lighten(t.palette().background, 0.1),
-                                t.palette().primary, activity),
-                            )),
+            background: Some(iced::Background::Color(lerp_color(
+                t.palette().background,
+                t.palette().primary,
+                activity,
+            ))),
             border: iced::Border {
                 radius: 10.into(),
                 width: 0.0,
@@ -105,13 +112,17 @@ pub fn icon_button_active<'a, M: 'a>(e: impl Into<Element<'a, M>>, activity: f64
         .padding(0)
 }
 
-pub fn button_active<'a, M: 'a>(e: impl Into<Element<'a, M>>, activity: f64) -> ibutton::Button<'a, M> {
+pub fn button_active<'a, M: 'a>(
+    e: impl Into<Element<'a, M>>,
+    activity: f64,
+) -> ibutton::Button<'a, M> {
     button(center(e).width(Length::Fill).height(Length::Fill))
         .style(move |t: &Theme, _| ibutton::Style {
-            background: Some(iced::Background::Color(
-                                lerp_color(palette::lighten(t.palette().background, 0.1),
-                                t.palette().primary, activity),
-                            )),
+            background: Some(iced::Background::Color(lerp_color(
+                t.palette().background,
+                t.palette().primary,
+                activity,
+            ))),
             border: iced::Border {
                 radius: 10.into(),
                 width: 0.0,
@@ -130,9 +141,7 @@ pub fn button<'a, M: 'a>(e: impl Into<Element<'a, M>>) -> ibutton::Button<'a, M>
     ibutton(center(e).width(Length::Fill).height(Length::Fill))
         .style(|t: &Theme, s| ibutton::Style {
             background: Some(iced::Background::Color(match s {
-                ibutton::Status::Pressed => {
-                    palette::lighten(t.palette().background, 0.35)
-                }
+                ibutton::Status::Pressed => palette::lighten(t.palette().background, 0.35),
                 _ => palette::lighten(t.palette().background, 0.15),
             })),
             border: iced::Border {
@@ -167,4 +176,3 @@ pub fn pill<'a, M: 'a>(wd: impl Into<Element<'a, M>>) -> Element<'a, M> {
         .center_y(Length::Fill)
         .into()
 }
-
